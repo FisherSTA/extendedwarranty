@@ -16,10 +16,21 @@ namespace ews
         {
             index = &value - &vector[0];
         }
+        vMPointer(vMPointer<T>& copy) : vector(copy.getVector())
+        {
+            index = copy.getIndex();
+            vector = copy.getVector();
+        }
+        vMPointer(vMPointer<T>&& copy) : vector(copy.getVector())
+        {
+            index = copy.getIndex();
+            vector = copy.getVector();
+        }
         vMPointer(int index, std::vector<T>& vector) : index(index), vector(vector){};
         ~vMPointer(){}
         int getIndex() {return index;} //returns the index
         T& getValue() {return vector[index];} //returns a reference to the value pointed to
+        std::vector<T>& getVector() {return vector;}
         vMPointer<T> operator +(vMPointer<T> other) {return vMPointer<T>(index + other.getIndex(), vector);}
         vMPointer<T> operator +(int other) {return vMPointer<T>(index + other, vector);}
         vMPointer<T> operator -(vMPointer<T> other) {return vMPointer<T>(index - other.getIndex(), vector);}
